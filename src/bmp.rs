@@ -8,6 +8,7 @@ pub struct BmpImage {
 }
 
 impl BmpImage {
+    /// 从文件中读取BMP图片
     pub fn read(filename: &str) -> std::io::Result<Self> {
         let mut file = File::open(filename)?;
         let mut header = vec![0; 54]; // 标准BMP头部大小
@@ -19,6 +20,7 @@ impl BmpImage {
         Ok(BmpImage { header, data })
     }
 
+    /// 将BMP图片写入文件
     pub fn write(&self, filename: &str) -> std::io::Result<()> {
         let mut file = File::create(filename)?;
         file.write_all(&self.header)?;
@@ -26,14 +28,12 @@ impl BmpImage {
         Ok(())
     }
 
+    /// 压缩BMP图片并返回压缩数据
     pub fn compress(&self) -> std::io::Result<Vec<u8>> {
         let mut huffman_tree = HuffmanTree::new();
         huffman_tree.build(&self.data);
-
-        // 压缩数据
         let compressed_data = huffman_tree.encode(&self.data);
 
-        // 构建压缩文件格式
         let mut result = Vec::new();
 
         // 1. 写入原始数据大小（8字节）
@@ -53,6 +53,7 @@ impl BmpImage {
         Ok(result)
     }
 
+    /// 解压BMP图片并返回解压数据
     pub fn decompress(compressed: &[u8]) -> std::io::Result<Self> {
         let mut offset = 0;
 

@@ -8,9 +8,11 @@ use std::env;
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
     if args.len() != 3 {
+        println!("Huffman压缩/解压工具");
+        println!("----------------------");
         println!("用法:");
-        println!("压缩: {} compress <input.bmp>", args[0]);
-        println!("解压: {} decompress <input.bmp.compressed>", args[0]);
+        println!(" -> 压缩: {} compress <input.bmp>", args[0]);
+        println!(" -> 解压: {} decompress <input.bmp.compressed>", args[0]);
         return Ok(());
     }
 
