@@ -10,6 +10,7 @@ impl HuffmanTree {
         HuffmanTree { root: None }
     }
 
+    /// 构建哈夫曼树
     pub fn build(&mut self, data: &[u8]) {
         let frequencies = self.calculate_frequencies(data);
         let mut heap = self.create_priority_queue(frequencies);
@@ -47,6 +48,7 @@ impl HuffmanTree {
         heap
     }
 
+    /// 编码数据，返回编码后的数据
     pub fn encode(&self, data: &[u8]) -> Vec<u8> {
         let codes = self.generate_codes();
         let mut encoded = Vec::new();
@@ -106,6 +108,7 @@ impl HuffmanTree {
         }
     }
 
+    /// 解码数据，返回原始数据
     pub fn decode(&self, encoded: &[u8], original_size: usize) -> Vec<u8> {
         let mut decoded = Vec::with_capacity(original_size);
         if let Some(root) = &self.root {
@@ -142,7 +145,7 @@ impl HuffmanTree {
         decoded
     }
 
-    // 序列化哈夫曼树，用于保存树结构
+    /// 序列化哈夫曼树，用于保存树结构
     pub fn serialize(&self) -> Vec<u8> {
         let mut result = Vec::new();
         if let Some(root) = &self.root {
@@ -167,7 +170,7 @@ impl HuffmanTree {
         }
     }
 
-    // 从序列化数据重建哈夫曼树
+    /// 反序列化数据重建哈夫曼树
     pub fn deserialize(data: &[u8]) -> Option<Self> {
         let mut index = 0;
         let root = Self::deserialize_node(data, &mut index)?;
