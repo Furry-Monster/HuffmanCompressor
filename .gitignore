@@ -1,0 +1,8 @@
+# Ignore all files in the target directory
+/target
+
+# IDE files
+.idea
+
+# Logs
+logs/
